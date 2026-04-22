@@ -1,0 +1,40 @@
+<mat-toolbar class="navbar">
+  <a routerLink="/" class="brand">
+    <mat-icon>storefront</mat-icon>
+    Sistema de Vendas
+  </a>
+
+  <span class="spacer"></span>
+
+  <div class="nav-actions">
+    @if (sessao.cliente()) {
+      <button mat-button class="btn-cart" routerLink="/carrinho">
+        <mat-icon
+          [matBadge]="carrinho.totalItens() || null"
+          matBadgeColor="warn"
+          matBadgeSize="small">
+          shopping_cart
+        </mat-icon>
+        Carrinho
+      </button>
+
+      <button mat-button class="user-btn" [matMenuTriggerFor]="menu">
+        <mat-icon>account_circle</mat-icon>
+        {{ sessao.cliente()!.nomeCompleto.split(' ')[0] }}
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="sair()">
+          <mat-icon>logout</mat-icon>
+          Sair
+        </button>
+      </mat-menu>
+    } @else {
+      <button mat-button class="btn-outline" routerLink="/cadastro">
+        Cadastrar
+      </button>
+      <button mat-button class="btn-solid" routerLink="/cadastro">
+        Entrar
+      </button>
+    }
+  </div>
+</mat-toolbar>

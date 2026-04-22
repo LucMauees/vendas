@@ -1,6 +1,7 @@
 package com.demo.entregas.web.dto;
 
 public record ProdutoResponse(
+        Long id,
         String nome,
         String descricao,
         Double preco,
@@ -8,6 +9,7 @@ public record ProdutoResponse(
         String categoria,
         String marca,
         String nomeFornecedor,
-        String imagemPrincipalUrl
+        String imagemPrincipalUrl,
+        String status
 ) {
 }

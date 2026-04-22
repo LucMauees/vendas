@@ -1,0 +1,131 @@
+.carrinho-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+
+  @media (max-width: 640px) { padding: 32px 16px 64px; }
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  margin-bottom: 32px;
+  color: var(--cor-texto);
+
+  mat-icon { font-size: 2rem; width: 2rem; height: 2rem; }
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  padding: 80px 0;
+}
+
+.carrinho-vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 16px;
+  text-align: center;
+  gap: 12px;
+
+  .empty-icon {
+    font-size: 4rem;
+    width: 4rem;
+    height: 4rem;
+    color: var(--cor-borda);
+  }
+
+  h2 { font-size: 1.3rem; font-weight: 600; margin: 0; }
+  p  { color: var(--cor-texto-sub); margin: 0; }
+}
+
+.carrinho-content {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 24px;
+  align-items: start;
+
+  @media (max-width: 768px) { grid-template-columns: 1fr; }
+}
+
+.itens-card {
+  overflow: hidden;
+  border-radius: var(--raio) !important;
+  border: 1px solid var(--cor-borda) !important;
+  box-shadow: none !important;
+}
+
+.itens-table { width: 100%; }
+
+.nome-produto { font-weight: 500; color: var(--cor-texto); }
+
+.quantidade-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  .qty-value {
+    min-width: 28px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--cor-texto);
+  }
+}
+
+.resumo-card {
+  position: sticky;
+  top: 76px;
+  border-radius: var(--raio) !important;
+  border: 1px solid var(--cor-borda) !important;
+  box-shadow: none !important;
+  background: var(--cor-superficie) !important;
+
+  mat-card-header { padding: 20px 20px 0; }
+  mat-card-title {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
+  }
+  mat-card-content { padding: 12px 20px 0 !important; }
+}
+
+.resumo-linha {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 0.9rem;
+  color: var(--cor-texto-sub);
+
+  &.total {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--cor-texto);
+    padding-top: 14px;
+  }
+}
+
+mat-divider { border-color: var(--cor-borda) !important; }
+
+.btn-finalizar {
+  width: 100%;
+  height: 44px;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  background: var(--cor-texto) !important;
+  color: #fff !important;
+  letter-spacing: 0.01em;
+}
+
+mat-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 20px 20px !important;
+}

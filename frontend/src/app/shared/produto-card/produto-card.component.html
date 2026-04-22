@@ -1,0 +1,41 @@
+<mat-card class="produto-card" [class.esgotado]="!disponivel">
+  <div class="imagem-wrapper">
+    <img
+      [src]="produto().imagemPrincipalUrl"
+      [alt]="produto().nome"
+      class="produto-imagem"
+      loading="lazy"
+      (error)="img.src = 'https://placehold.co/400x210/f4f0eb/7a7570?text=Sem+Imagem'"
+      #img
+    />
+    <span
+      class="status-badge"
+      [class.disponivel]="produto().estoqueAtual > 5"
+      [class.pouco]="produto().estoqueAtual > 0 && produto().estoqueAtual <= 5"
+      [class.indisponivel]="!disponivel"
+    >
+      {{ badgeLabel }}
+    </span>
+  </div>
+
+  <mat-card-content class="card-body">
+    <p class="categoria">{{ produto().categoria }}</p>
+    <h3 class="nome" [title]="produto().nome">{{ produto().nome }}</h3>
+    <p class="marca">{{ produto().marca }}</p>
+    <p class="descricao">{{ produto().descricao }}</p>
+    <div class="preco-row">
+      <span class="preco">R$ {{ produto().preco | number: '1.2-2' }}</span>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions class="card-actions">
+    <button
+      mat-flat-button
+      class="btn-cart"
+      [disabled]="!disponivel"
+      (click)="onAddClick()"
+    >
+      {{ disponivel ? 'Adicionar ao carrinho' : 'Indisponível' }}
+    </button>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,81 @@
+<div class="vitrine-container">
+
+  <!-- Hero editorial -->
+  <section class="hero">
+    <div class="hero-top">
+      <div class="hero-texto">
+        <h1>Nossa Vitrine.</h1>
+        <p>Explore os produtos e adicione ao carrinho</p>
+      </div>
+
+      <mat-form-field appearance="outline" class="campo-busca">
+        <mat-label>Buscar produto</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          [ngModel]="busca()"
+          (ngModelChange)="busca.set($event)"
+          placeholder="Nome, marca..."
+        />
+        @if (busca()) {
+          <button mat-icon-button matSuffix (click)="busca.set('')">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Filtros de categoria como pills customizados -->
+    <div class="filtros">
+      @for (cat of categorias(); track cat) {
+        <button
+          class="chip-cat"
+          [class.ativo]="categoriaAtiva() === cat"
+          (click)="selecionarCategoria(cat)"
+        >
+          {{ cat }}
+        </button>
+      }
+    </div>
+  </section>
+
+  <hr class="divider-linha" />
+
+  @if (carregando()) {
+    <div class="spinner-wrapper">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Carregando produtos...</p>
+    </div>
+  } @else if (produtos().length === 0) {
+    <div class="vazio">
+      <mat-icon>inventory_2</mat-icon>
+      <h2>Nenhum produto encontrado</h2>
+      <p>Tente outro termo ou categoria</p>
+      <button mat-stroked-button (click)="busca.set(''); selecionarCategoria('Todos')" style="margin-top:8px">
+        Limpar filtros
+      </button>
+    </div>
+  } @else {
+    <p class="contador">{{ produtos().length }} produto{{ produtos().length !== 1 ? 's' : '' }}</p>
+    <div class="grid">
+      @for (produto of produtos(); track produto.id) {
+        <app-produto-card
+          [produto]="produto"
+          (adicionarAoCarrinho)="adicionarAoCarrinho($event)"
+        />
+      }
+    </div>
+  }
+
+  @if (!sessao.cliente()) {
+    <div class="cta-bar">
+      <div class="cta-texto">
+        <h3>Pronto para comprar?</h3>
+        <p>Crie sua conta gratuitamente e comece agora</p>
+      </div>
+      <button mat-raised-button routerLink="/cadastro">
+        Criar conta
+      </button>
+    </div>
+  }
+</div>

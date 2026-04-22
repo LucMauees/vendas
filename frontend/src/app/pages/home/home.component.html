@@ -1,0 +1,89 @@
+<div class="home-container">
+  <section class="hero">
+    <h1>Bem-vindo ao Sistema de Vendas</h1>
+    <p>Busque produtos pelo ID e adicione ao seu carrinho</p>
+  </section>
+
+  <section class="search-section">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>ID do Produto</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input
+        matInput
+        type="number"
+        [(ngModel)]="produtoId"
+        placeholder="Ex: 1"
+        (keyup.enter)="buscarProduto()"
+      />
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="buscarProduto()">
+      <mat-icon>search</mat-icon>
+      Buscar
+    </button>
+  </section>
+
+  @if (erro()) {
+    <p class="erro-msg">{{ erro() }}</p>
+  }
+
+  @if (carregando()) {
+    <div class="spinner-container">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
+  }
+
+  @if (produto(); as p) {
+    <div class="produto-resultado">
+      <mat-card class="produto-card">
+        <img mat-card-image [src]="p.imagemPrincipalUrl" [alt]="p.nome" class="produto-imagem" />
+        <mat-card-header>
+          <mat-card-title>{{ p.nome }}</mat-card-title>
+          <mat-card-subtitle>{{ p.marca }} · {{ p.categoria }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="descricao">{{ p.descricao }}</p>
+          <div class="produto-info">
+            <span class="preco">R$ {{ p.preco | number: '1.2-2' }}</span>
+            <mat-chip-set>
+              @if (p.estoqueAtual > 0) {
+                <mat-chip color="primary" highlighted>
+                  <mat-icon matChipAvatar>inventory_2</mat-icon>
+                  {{ p.estoqueAtual }} em estoque
+                </mat-chip>
+              } @else {
+                <mat-chip color="warn" highlighted>Esgotado</mat-chip>
+              }
+            </mat-chip-set>
+          </div>
+          <p class="fornecedor">Fornecedor: {{ p.nomeFornecedor }}</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button
+            mat-raised-button
+            color="primary"
+            [disabled]="p.estoqueAtual === 0"
+            (click)="adicionarAoCarrinho(p)"
+          >
+            <mat-icon>add_shopping_cart</mat-icon>
+            Adicionar ao Carrinho
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  }
+
+  @if (!sessao.cliente()) {
+    <section class="cta-section">
+      <mat-card class="cta-card">
+        <mat-card-content>
+          <mat-icon class="cta-icon">person_add</mat-icon>
+          <h2>Novo por aqui?</h2>
+          <p>Crie sua conta para começar a comprar</p>
+          <button mat-raised-button color="accent" routerLink="/cadastro">
+            Criar conta grátis
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </section>
+  }
+</div>

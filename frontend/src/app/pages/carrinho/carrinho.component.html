@@ -1,0 +1,121 @@
+<div class="carrinho-container">
+  <h1 class="page-title">
+    <mat-icon>shopping_cart</mat-icon>
+    Meu Carrinho
+  </h1>
+
+  @if (carregando()) {
+    <div class="spinner-container">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
+  } @else if (carrinhoService.itens().length === 0) {
+    <div class="carrinho-vazio">
+      <mat-icon class="empty-icon">remove_shopping_cart</mat-icon>
+      <h2>Seu carrinho está vazio</h2>
+      <p>Busque produtos na página inicial e adicione ao carrinho</p>
+      <button mat-raised-button color="primary" routerLink="/">
+        <mat-icon>storefront</mat-icon>
+        Ir às Compras
+      </button>
+    </div>
+  } @else {
+    <div class="carrinho-content">
+      <mat-card class="itens-card">
+        <table mat-table [dataSource]="carrinhoService.itens()" class="itens-table">
+          <ng-container matColumnDef="produto">
+            <th mat-header-cell *matHeaderCellDef>Produto</th>
+            <td mat-cell *matCellDef="let item">
+              <span class="nome-produto">{{ item.nomeProduto }}</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="preco">
+            <th mat-header-cell *matHeaderCellDef>Preço Unit.</th>
+            <td mat-cell *matCellDef="let item">
+              R$ {{ item.precoUnitario | number: '1.2-2' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="quantidade">
+            <th mat-header-cell *matHeaderCellDef>Quantidade</th>
+            <td mat-cell *matCellDef="let item">
+              <div class="quantidade-ctrl">
+                <button
+                  mat-icon-button
+                  matTooltip="Diminuir"
+                  (click)="diminuir(item)"
+                >
+                  <mat-icon>{{ item.quantidade === 1 ? 'delete' : 'remove' }}</mat-icon>
+                </button>
+                <span class="qty-value">{{ item.quantidade }}</span>
+                <button
+                  mat-icon-button
+                  matTooltip="Aumentar"
+                  (click)="aumentar(item)"
+                >
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="subtotal">
+            <th mat-header-cell *matHeaderCellDef>Subtotal</th>
+            <td mat-cell *matCellDef="let item">
+              <strong>R$ {{ item.subtotal | number: '1.2-2' }}</strong>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="acoes">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let item">
+              <button
+                mat-icon-button
+                color="warn"
+                matTooltip="Remover"
+                (click)="remover(item)"
+              >
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+          <tr mat-row *matRowDef="let row; columns: colunas"></tr>
+        </table>
+      </mat-card>
+
+      <mat-card class="resumo-card">
+        <mat-card-header>
+          <mat-card-title>Resumo</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="resumo-linha">
+            <span>Itens ({{ carrinhoService.totalItens() }})</span>
+            <span>R$ {{ carrinhoService.totalValor() | number: '1.2-2' }}</span>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="resumo-linha total">
+            <strong>Total</strong>
+            <strong>R$ {{ carrinhoService.totalValor() | number: '1.2-2' }}</strong>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button
+            mat-raised-button
+            color="primary"
+            class="btn-finalizar"
+            (click)="finalizarCompra()"
+          >
+            <mat-icon>payment</mat-icon>
+            Finalizar Compra
+          </button>
+          <button mat-button routerLink="/">
+            <mat-icon>arrow_back</mat-icon>
+            Continuar Comprando
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  }
+</div>

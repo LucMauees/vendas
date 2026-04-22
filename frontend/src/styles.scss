@@ -1,0 +1,89 @@
+@use '@angular/material' as mat;
+
+// -- Design tokens inspirados no estilo editorial clean/creme --
+:root {
+  --cor-fundo:       #f4f0eb;
+  --cor-superficie:  #ffffff;
+  --cor-borda:       #e5dfd6;
+  --cor-texto:       #1a1a1a;
+  --cor-texto-sub:   #7a7570;
+  --cor-primaria:    #1a1a1a;
+  --cor-acento:      #c8a96e;
+  --raio:            14px;
+  --sombra-card:     0 2px 12px rgba(0,0,0,.07);
+  --sombra-hover:    0 8px 28px rgba(0,0,0,.12);
+}
+
+html {
+  height: 100%;
+  @include mat.theme((
+    color: (
+      primary:   mat.$azure-palette,
+      tertiary:  mat.$orange-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+body {
+  color-scheme: light;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+// --- Overrides globais de Material ---
+
+// Cards
+.mat-mdc-card {
+  border-radius: var(--raio) !important;
+  box-shadow: var(--sombra-card) !important;
+  border: 1px solid var(--cor-borda) !important;
+  background: var(--cor-superficie) !important;
+}
+
+// Botão primário com cor escura editorial
+.mat-mdc-raised-button.mat-primary {
+  background-color: var(--cor-primaria) !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.mat-mdc-button.mat-primary {
+  color: var(--cor-primaria) !important;
+}
+
+// Chips de categoria
+.mat-mdc-chip {
+  border-radius: 100px !important;
+  font-size: 0.82rem !important;
+}
+
+// Form fields
+.mat-mdc-form-field-outline {
+  border-radius: 10px !important;
+}
+
+// Toolbar override (navbar)
+.mat-toolbar {
+  background: var(--cor-superficie) !important;
+  color: var(--cor-texto) !important;
+  border-bottom: 1px solid var(--cor-borda) !important;
+}
+
+// Badge de carrinho
+.mat-badge-content {
+  background: var(--cor-acento) !important;
+  color: #fff !important;
+}
+
+// Scrollbar sutil
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--cor-borda); border-radius: 4px; }
